@@ -3,16 +3,16 @@
 Name: Guineng Cai 
 */
 class Car
-{
+{  
     private $owner;
-    private $cc;
+    private $piston;
     private $isEngineOn;
     private $distance;
 
-    function __construct($owner, $cc)
+    function __construct($owner, $piston)
     {
         $this->owner = $owner;
-        $this->cc = $cc;
+        $this->piston = $piston;
         $this->isEngineOn = false;
         $this->distance = 0;
     }
@@ -33,14 +33,14 @@ class Car
             fprintf(STDERR, "Cannot run, engine is off\n");
             return false;
         }
-        
+    
         $this->distance += $km;
         return true;
     }
 
     function fuelUsed()
     {
-        return ($this->distance / 20) * ($this->cc / 1000);
+        return ($this->distance / 20) * ($this->piston / 1000);
     }
 
     function showInfo()
@@ -49,14 +49,13 @@ class Car
             fprintf(STDERR, "Cannot show, engine is on\n");
             return false;
         }
+
         printf("Owner: %s\n", $this->owner);
         printf("Running distance: %6d km\n",
             $this->distance);
         printf("Fuel used:        %6.2f L\n",
             $this->fuelUsed());
-        
-        return true;
-    }
+  }
 }
 
 printf("Input (owner cc): ");
@@ -68,7 +67,7 @@ while(true) {
     $command = null;
     $value = null;
     fscanf(STDIN, "%s %d", $command, $value);
-    if(strtolower($command) === 'e') break;
+    if($command === 'e') break;
     switch(strtolower($command)) {
         case '0':
             $car->engineStop();
@@ -96,6 +95,6 @@ EOT
             );
             break;
         default:
-            fprintf(STDERR, "Unkown command '%s' !!!\n", $command);
+            printf(STDERR, "Invalid command, input h for help!!!\n");
     }
 }
